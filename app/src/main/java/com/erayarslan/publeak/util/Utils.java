@@ -1,7 +1,6 @@
 package com.erayarslan.publeak.util;
 
 import android.os.StrictMode;
-
 import java.io.File;
 import java.io.FileOutputStream;
 import java.io.IOException;

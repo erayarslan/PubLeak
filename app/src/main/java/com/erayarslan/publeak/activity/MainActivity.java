@@ -4,62 +4,33 @@ import android.support.v7.app.ActionBarActivity;
 import android.os.Bundle;
 import android.view.Menu;
 import android.view.MenuItem;
-import android.widget.ImageView;
+import android.widget.ListView;
 import com.erayarslan.publeak.R;
-import com.erayarslan.publeak.util.TestImage;
-import com.erayarslan.publeak.util.Utils;
-import com.google.gson.Gson;
-import com.google.gson.GsonBuilder;
-import com.google.gson.internal.bind.DateTypeAdapter;
-import com.squareup.picasso.Picasso;
-import retrofit.client.Response;
-import java.io.File;
-import java.io.IOException;
-import java.io.InputStream;
-import java.util.Date;
-import retrofit.Callback;
-import retrofit.RestAdapter;
-import retrofit.RetrofitError;
-import retrofit.converter.GsonConverter;
+import com.erayarslan.publeak.adapter.TimeLineAdapter;
+import com.erayarslan.publeak.util.Image;
+import java.util.ArrayList;
+import java.util.List;
 
 public class MainActivity extends ActionBarActivity {
-    private ImageView imageView;
+    private ListView timeLine;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
-
-        imageView = (ImageView) findViewById(R.id.imageView);
-
-        Gson gson = new GsonBuilder()
-                .registerTypeAdapter(Date.class, new DateTypeAdapter())
-                .create();
-
-        RestAdapter restAdapter = new RestAdapter.Builder()
-                .setEndpoint("http://i.imgur.com/")
-                .setConverter(new GsonConverter(gson))
-                .build();
-
-        TestImage testImage = restAdapter.create(TestImage.class);
-
-        testImage.getImage(new Callback<Response>() {
-            @Override
-            public void success(Response response, Response response2) {
-                try {
-                    InputStream inputStream = response.getBody().in();
-                    File file = Utils.stream2file(inputStream);
-                    Picasso.with(MainActivity.this).load(file).into(imageView);
-                } catch (IOException e) {
-                    e.printStackTrace();
-                }
-            }
-
-            @Override
-            public void failure(RetrofitError error) {
-
-            }
-        });
+        timeLine = (ListView) findViewById(R.id.timeLine);
+        List<Image> images = new ArrayList<Image>();
+        images.add(new Image("a_man-t1.jpg"));
+        images.add(new Image("new_year_2015_wishes-t1.jpg"));
+        images.add(new Image("maserati_black-t1.jpg"));
+        images.add(new Image("a_man-t1.jpg"));
+        images.add(new Image("new_year_2015_wishes-t1.jpg"));
+        images.add(new Image("maserati_black-t1.jpg"));
+        images.add(new Image("a_man-t1.jpg"));
+        images.add(new Image("new_year_2015_wishes-t1.jpg"));
+        images.add(new Image("maserati_black-t1.jpg"));
+        TimeLineAdapter timeLineAdapter = new TimeLineAdapter(MainActivity.this, images);
+        timeLine.setAdapter(timeLineAdapter);
     }
 
 
