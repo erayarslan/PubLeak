@@ -6,9 +6,12 @@ import com.erayarslan.publeak.R;
 import com.google.gson.Gson;
 import com.google.gson.GsonBuilder;
 import com.google.gson.internal.bind.DateTypeAdapter;
+
 import java.io.IOException;
 import java.util.Date;
 import retrofit.RestAdapter;
+import retrofit.RetrofitError;
+import retrofit.client.Response;
 import retrofit.converter.GsonConverter;
 
 public class DownloadAsyncTask extends AsyncTask<ViewHolder, Void, ViewHolder> {
@@ -27,18 +30,19 @@ public class DownloadAsyncTask extends AsyncTask<ViewHolder, Void, ViewHolder> {
     protected ViewHolder doInBackground(ViewHolder... params) {
         ViewHolder viewHolder = params[0];
         try {
-            viewHolder.bitmap = BitmapFactory.decodeStream(testImage.getImage(viewHolder.imageURL).getBody().in());
-        } catch (IOException e) {
+            Response response = testImage.getImage(viewHolder.imageURL);
+            viewHolder.bitmap = BitmapFactory.decodeStream(response.getBody().in());
+        } catch (IOException ioException) {
             viewHolder.bitmap = null;
-        }
-
-        return viewHolder;
+        } catch (RetrofitError retrofitError) {
+            viewHolder.bitmap = null;
+        } return viewHolder;
     }
 
     @Override
     protected void onPostExecute(ViewHolder result) {
         if (result.bitmap == null) {
-            result.imageView.setImageResource(R.drawable.loading);
+            result.imageView.setImageResource(R.drawable.image_not_found);
         } else {
             result.imageView.setImageBitmap(result.bitmap);
         }

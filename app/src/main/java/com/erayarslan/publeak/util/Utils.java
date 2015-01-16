@@ -1,5 +1,6 @@
 package com.erayarslan.publeak.util;
 
+import android.os.Environment;
 import android.os.StrictMode;
 import java.io.File;
 import java.io.FileOutputStream;
@@ -21,6 +22,14 @@ public class Utils {
         FileOutputStream out = new FileOutputStream(tempFile);
         copy(in, out);
         return tempFile;
+    }
+
+    public static File createTemporaryFile(String part, String ext) throws IOException {
+        File tempDir = Environment.getExternalStorageDirectory();
+        tempDir = new File(tempDir.getAbsolutePath() + "/.temp/");
+        if(!tempDir.exists()) {
+            tempDir.mkdir();
+        } return File.createTempFile(part, ext, tempDir);
     }
 
     public static int copy(final InputStream input, final OutputStream output) throws IOException {

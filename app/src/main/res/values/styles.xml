@@ -1,8 +1,22 @@
 <resources>
-
-    <!-- Base application theme. -->
     <style name="AppTheme" parent="Theme.AppCompat.Light.DarkActionBar">
-        <!-- Customize your theme here. -->
     </style>
 
+    <style name="button_menu">
+        <item name="android:layout_height">@dimen/button_menu_height</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_alignParentBottom">true</item>
+    </style>
+
+    <style name="button_menu_element">
+        <item name="android:layout_height">fill_parent</item>
+        <item name="android:layout_width">fill_parent</item>
+        <item name="android:layout_centerHorizontal">true</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:background">@drawable/button_menu</item>
+    </style>
+
+    <style name="button_menu_element.photo">
+        <item name="android:src">@drawable/photo_icon</item>
+    </style>
 </resources>
